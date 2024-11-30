@@ -76,9 +76,15 @@ WORKDIR /usr/src/app
 # Copy application dependency manifests to the container image.
 # Copying this separately prevents re-running pip install on every code change.
 COPY requirements.txt ./
-
 # Install dependencies.
 RUN pip install -r requirements.txt
+
+# Copiar el script de instalación de ChromeDriver y ejecutarlo
+COPY install_chromedriver.py ./
+RUN python install_chromedriver.py
+
+# Configurar variable de entorno DISPLAY para evitar crashes
+ENV DISPLAY=:99
 
 # Copy local code to the container image.
 COPY . ./
