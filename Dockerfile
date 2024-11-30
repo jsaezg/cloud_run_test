@@ -16,6 +16,11 @@ FROM python:3.10.6-slim
 # Allow statements and log messages to immediately appear in the Cloud Run logs
 ENV PYTHONUNBUFFERED 1
 
+# Ajuste de hora
+RUN apt-get update && apt-get install -y tzdata
+ENV TZ="Chile/Continental"
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
 # Create and change to the app directory.
 WORKDIR /usr/src/app
 
